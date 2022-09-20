@@ -2,12 +2,12 @@
 WeatherApp is a simple Weather watch application that uses MVVM + Retrofit + Room and Clean Architecture. The application uses data from OpenWeather API. See documentation here: https://openweathermap.org/current
 
 # Usage
-This application requires API KEY from OpenWeather. For you to be able to the access endpoints, you must have a API_KEY field in your local.properties file. Insert a new field with "API_KEY" (without quotes):
+This application requires API KEY from OpenWeather. For you to be able to access the endpoints, you must have a API_KEY field in your local.properties file. Insert a new field with "API_KEY" (without quotes):
 
 e.g.
 API_KEY={API KEY here}
 
-Put the API KEY provided to you, or you can put your own API KEY you got from OpenWeather API.
+Put the API KEY provided to you, or you can put your own API KEY you got from OpenWeather API. Rebuild then run the application.
 
 # Functionality Features
 - Log In and Registration with Room integration. This saves the user credentials into the local DB.
