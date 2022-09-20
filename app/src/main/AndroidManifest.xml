@@ -32,10 +32,12 @@
         <activity
             android:name=".featureweather.presentation.MainActivity"
             android:exported="true"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.WeatherApp" />
         <activity
             android:name=".featureweather.presentation.PermissionActivity"
             android:exported="true"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.WeatherApp" />
     </application>
 
