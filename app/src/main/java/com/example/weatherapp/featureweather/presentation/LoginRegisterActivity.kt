@@ -6,7 +6,11 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import com.example.weatherapp.common.Constants.KEY_USER
 import com.example.weatherapp.common.PrefManager
 import com.example.weatherapp.featureweather.domain.model.User
@@ -28,11 +32,14 @@ class LoginRegisterActivity : ComponentActivity() {
 
         setContent {
             WeatherAppTheme {
-                LoginRegisterScreen(
-                    modifier = Modifier
-                        .fillMaxSize()
-                ) { user ->
-                    redirectToPermission(user)
+                Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.primary) {
+                    LoginRegisterScreen(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(16.dp)
+                    ) { user ->
+                        redirectToPermission(user)
+                    }
                 }
             }
         }
