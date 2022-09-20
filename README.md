@@ -7,7 +7,7 @@ This application requires API KEY from OpenWeather. For you to be able to access
 e.g.
 API_KEY={API KEY here}
 
-Put the API KEY provided to you, or you can put your own API KEY you got from OpenWeather API. Rebuild then run the application.
+Put the API KEY provided to you, or you can put your own API KEY you got from OpenWeather API. Use actual device for best results as this application will be using GPS to locate itself. Rebuild then run the application.
 
 # Functionality Features
 - Log In and Registration with Room integration. This saves the user credentials into the local DB.
