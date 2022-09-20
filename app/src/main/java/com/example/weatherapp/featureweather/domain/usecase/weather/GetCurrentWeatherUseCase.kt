@@ -10,8 +10,8 @@ import javax.inject.Inject
 class GetCurrentWeatherUseCase @Inject constructor(
     private val repository: WeatherRepository,
 ) {
-    operator fun invoke(): Flow<Resource<Weather>> = flow {
-        repository.getCurrentWeather().collect {
+    operator fun invoke(latitude: Double, longitude: Double): Flow<Resource<Weather>> = flow {
+        repository.getCurrentWeather(latitude, longitude).collect {
             emit(it)
         }
     }
