@@ -9,9 +9,21 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import com.example.weatherapp.R
@@ -47,44 +59,82 @@ class PermissionActivity : ComponentActivity(), LocationListener {
 
         setContent {
             WeatherAppTheme {
-                val permissionsState = rememberMultiplePermissionsState(
-                    permissions = listOf(
-                        Manifest.permission.ACCESS_FINE_LOCATION,
-                        Manifest.permission.ACCESS_COARSE_LOCATION
+                Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.primary) {
+                    val permissionsState = rememberMultiplePermissionsState(
+                        permissions = listOf(
+                            Manifest.permission.ACCESS_FINE_LOCATION,
+                            Manifest.permission.ACCESS_COARSE_LOCATION
+                        )
                     )
-                )
 
-                val lifecycleOwner = LocalLifecycleOwner.current
-                DisposableEffect(
-                    key1 = lifecycleOwner,
-                    effect = {
-                        val observer = LifecycleEventObserver { _, event ->
-                            if (event == Lifecycle.Event.ON_START) {
-                                permissionsState.launchMultiplePermissionRequest()
+                    val lifecycleOwner = LocalLifecycleOwner.current
+                    DisposableEffect(
+                        key1 = lifecycleOwner,
+                        effect = {
+                            val observer = LifecycleEventObserver { _, event ->
+                                if (event == Lifecycle.Event.ON_START) {
+                                    permissionsState.launchMultiplePermissionRequest()
+                                }
+                            }
+                            lifecycleOwner.lifecycle.addObserver(observer)
+
+                            onDispose {
+                                lifecycleOwner.lifecycle.removeObserver(observer)
+                                locationManager.removeUpdates(this@PermissionActivity)
                             }
                         }
-                        lifecycleOwner.lifecycle.addObserver(observer)
+                    )
 
-                        onDispose {
-                            lifecycleOwner.lifecycle.removeObserver(observer)
-                            locationManager.removeUpdates(this@PermissionActivity)
-                        }
-                    }
-                )
+                    Column(modifier = Modifier.fillMaxSize(),
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally) {
+                        permissionsState.permissions.forEach { perm ->
+                            when (perm.permission) {
+                                Manifest.permission.ACCESS_FINE_LOCATION -> {
+                                    when {
+                                        perm.hasPermission -> {
+                                            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0F, this@PermissionActivity)
 
-                permissionsState.permissions.forEach { perm ->
-                    when (perm.permission) {
-                        Manifest.permission.ACCESS_FINE_LOCATION -> {
-                            when {
-                                perm.hasPermission -> {
-                                    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0F, this)
-                                }
-                                perm.shouldShowRationale -> {
-                                    Text(text = "Location permission is needed to fetch the data.")
-                                }
-                                !perm.shouldShowRationale && !perm.hasPermission -> {
-                                    Text(text = "Location permission was permanently denied."
-                                            + "You can enable it in the app settings.")
+
+                                            Image(painter = painterResource(id = R.drawable.ic_gps),
+                                                contentDescription = "logo",
+                                                modifier = Modifier.size(72.dp))
+
+                                            Spacer(modifier = Modifier.height(16.dp))
+
+                                            CircularProgressIndicator(
+                                                modifier = Modifier.size(24.dp),
+                                                strokeWidth = 2.dp,
+                                                color = Color.White
+                                            )
+
+                                            Spacer(modifier = Modifier.height(8.dp))
+
+                                            Text(
+                                                text = getString(R.string.fetching_gps),
+                                                fontSize = 12.sp,
+                                                color = Color.White
+                                            )
+                                        }
+                                        perm.shouldShowRationale -> {
+                                            Text(
+                                                modifier = Modifier.padding(horizontal = 32.dp),
+                                                text = getString(R.string.location_permission_denied),
+                                                fontSize = 12.sp,
+                                                color = Color.White,
+                                                textAlign = TextAlign.Center
+                                            )
+                                        }
+                                        !perm.shouldShowRationale && !perm.hasPermission -> {
+                                            Text(
+                                                modifier = Modifier.padding(horizontal = 32.dp),
+                                                text = getString(R.string.location_permission_denied_final),
+                                                fontSize = 12.sp,
+                                                color = Color.White,
+                                                textAlign = TextAlign.Center
+                                            )
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -140,7 +190,9 @@ class PermissionActivity : ComponentActivity(), LocationListener {
                 startActivity(Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS))
             }
             .setNegativeButton(R.string.no) { _, _ ->
-
+                val intent = Intent(this, LoginRegisterActivity::class.java)
+                startActivity(intent)
+                finish()
             }
         builder.create().show()
     }
