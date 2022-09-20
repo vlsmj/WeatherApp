@@ -4,7 +4,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.weatherapp.common.util.Resource
-import com.example.weatherapp.featureweather.domain.usecase.weather.UseCasesWeather
+import com.example.weatherapp.featureweather.domain.usecase.UseCasesWeatherApp
 import com.example.weatherapp.featureweather.presentation.state.CurrentWeatherState
 import com.example.weatherapp.featureweather.presentation.state.ListWeatherState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class WeatherViewModel @Inject constructor(
-    private val useCasesWeather: UseCasesWeather,
+    private val useCasesWeatherApp: UseCasesWeatherApp,
 ) : ViewModel() {
 
     var currentWeatherState = mutableStateOf(CurrentWeatherState())
@@ -24,7 +24,7 @@ class WeatherViewModel @Inject constructor(
         private set
 
     fun getCurrentWeather() {
-        useCasesWeather.getCurrentWeather().onEach {
+        useCasesWeatherApp.getCurrentWeatherUseCase().onEach {
             when (it) {
                 is Resource.Loading -> {
                     currentWeatherState.value = currentWeatherState.value.copy(isLoading = true)
