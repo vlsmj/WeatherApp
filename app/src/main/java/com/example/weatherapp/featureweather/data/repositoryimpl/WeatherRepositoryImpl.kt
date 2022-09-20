@@ -1,6 +1,7 @@
 package com.example.weatherapp.featureweather.data.repositoryimpl
 
 import com.example.weatherapp.R
+import com.example.weatherapp.common.PrefManager
 import com.example.weatherapp.common.util.Resource
 import com.example.weatherapp.common.util.UiText
 import com.example.weatherapp.featureweather.data.datasource.WeatherDao
@@ -15,14 +16,20 @@ import javax.inject.Inject
 class WeatherRepositoryImpl @Inject constructor(
     private val api: OpenWeatherApi,
     private val weatherDao: WeatherDao,
+    private val prefManager: PrefManager,
 ) : WeatherRepository {
 
-    override suspend fun getCurrentWeather() = flow {
+    override suspend fun getCurrentWeather(latitude: Double, longitude: Double) = flow {
         try {
             emit(Resource.Loading())
 
-            val newCurrentWeather = api.getCurrentWeather()
-            weatherDao.insertWeather(newCurrentWeather.toWeather())
+            val newCurrentWeather = api.getCurrentWeather(latitude, longitude)
+
+            // Prevents inserting new weather data object on every tab switch
+            if (prefManager.isInitialFetch) {
+                weatherDao.insertWeather(newCurrentWeather.toWeather())
+                prefManager.isInitialFetch = false
+            }
 
             emit(Resource.Success(weatherDao.getAllWeather()[0]))
         } catch (e: HttpException) {

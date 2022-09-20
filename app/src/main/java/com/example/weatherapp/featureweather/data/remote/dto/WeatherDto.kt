@@ -19,7 +19,6 @@ fun WeatherDto.toWeather(): Weather {
     val sunsetTime = this.countryDto.sunset.toString()
 
     return Weather(
-        id = this.id,
         temperatureInCelsius = mTemperatureInCelsius,
         icon = icon,
         condition = condition,

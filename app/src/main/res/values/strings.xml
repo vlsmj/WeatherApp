@@ -5,4 +5,9 @@
     <string name="error_io_exception_message">An error has occurred while fetching data. Please check your internet connection.</string>
     <string name="error_user_exists">This user already exists!</string>
     <string name="error_user_not_found">Invalid username or password. :(</string>
+
+    <string name="dialog_message_location_disabled">Location access is needed to use this application. Do you want to enable it?</string>
+
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 </resources>

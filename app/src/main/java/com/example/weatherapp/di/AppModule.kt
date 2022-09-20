@@ -3,6 +3,7 @@ package com.example.weatherapp.di
 import android.app.Application
 import androidx.room.Room
 import com.example.weatherapp.common.Constants.BASE_URL
+import com.example.weatherapp.common.PrefManager
 import com.example.weatherapp.featureweather.data.datasource.UserDao
 import com.example.weatherapp.featureweather.data.datasource.WeatherDao
 import com.example.weatherapp.featureweather.data.datasource.WeatherDatabase
@@ -62,6 +63,10 @@ object AppModule {
     fun provideUserDao(database: WeatherDatabase): UserDao {
         return database.userDao()
     }
+
+    @Provides
+    @Singleton
+    fun providesPrefManager(application: Application): PrefManager = PrefManager(application)
 
     @Provides
     @Singleton
