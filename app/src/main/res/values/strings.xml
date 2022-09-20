@@ -10,4 +10,7 @@
 
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="fetching_gps">Fetching your location…</string>
+    <string name="location_permission_denied">Location permission is needed to get your accurate location.</string>
+    <string name="location_permission_denied_final">Location permission was permanently denied. You can enable it in the application settings.</string>
 </resources>
