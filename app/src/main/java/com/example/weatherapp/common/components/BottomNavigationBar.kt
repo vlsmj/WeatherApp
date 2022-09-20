@@ -37,7 +37,7 @@ fun BottomNavigationBar(
                         onItemClick(item)
                     }
                 },
-                selectedContentColor = Color.Green,
+                selectedContentColor = Color.White,
                 unselectedContentColor = Color.Gray,
                 icon = {
                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
