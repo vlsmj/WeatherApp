@@ -3,13 +3,17 @@ package com.example.weatherapp.di
 import android.app.Application
 import androidx.room.Room
 import com.example.weatherapp.common.Constants.BASE_URL
+import com.example.weatherapp.featureweather.data.datasource.UserDao
 import com.example.weatherapp.featureweather.data.datasource.WeatherDao
 import com.example.weatherapp.featureweather.data.datasource.WeatherDatabase
 import com.example.weatherapp.featureweather.data.remote.OpenWeatherApi
+import com.example.weatherapp.featureweather.domain.repository.UserRepository
 import com.example.weatherapp.featureweather.domain.repository.WeatherRepository
-import com.example.weatherapp.featureweather.domain.usecase.weather.GetAllWeather
-import com.example.weatherapp.featureweather.domain.usecase.weather.GetCurrentWeather
-import com.example.weatherapp.featureweather.domain.usecase.weather.UseCasesWeather
+import com.example.weatherapp.featureweather.domain.usecase.UseCasesWeatherApp
+import com.example.weatherapp.featureweather.domain.usecase.user.GetUserUseCase
+import com.example.weatherapp.featureweather.domain.usecase.user.InsertUserUseCase
+import com.example.weatherapp.featureweather.domain.usecase.weather.GetAllWeatherUseCase
+import com.example.weatherapp.featureweather.domain.usecase.weather.GetCurrentWeatherUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -36,7 +40,7 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideCoinGeckoApi(): OpenWeatherApi {
+    fun provideOpenWeatherApi(): OpenWeatherApi {
         val okHttpClient = OkHttpClient.Builder()
             .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BASIC))
             .build()
@@ -55,10 +59,17 @@ object AppModule {
     }
 
     @Provides
+    fun provideUserDao(database: WeatherDatabase): UserDao {
+        return database.userDao()
+    }
+
+    @Provides
     @Singleton
-    fun provideWeatherUseCases(repository: WeatherRepository) = UseCasesWeather(
-        GetCurrentWeather(repository),
-        GetAllWeather(repository)
+    fun provideWeatherUseCases(weatherRepository: WeatherRepository, userRepository: UserRepository) = UseCasesWeatherApp(
+        GetCurrentWeatherUseCase(weatherRepository),
+        GetAllWeatherUseCase(weatherRepository),
+        GetUserUseCase(userRepository),
+        InsertUserUseCase(userRepository)
     )
 }
 

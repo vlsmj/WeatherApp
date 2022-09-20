@@ -7,11 +7,11 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
-class GetAllWeather @Inject constructor(
+class GetCurrentWeatherUseCase @Inject constructor(
     private val repository: WeatherRepository,
 ) {
-    operator fun invoke(): Flow<Resource<List<Weather>>> = flow {
-        repository.getAllWeather().collect {
+    operator fun invoke(): Flow<Resource<Weather>> = flow {
+        repository.getCurrentWeather().collect {
             emit(it)
         }
     }
