@@ -3,8 +3,11 @@ package com.example.weatherapp.common.components
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
+import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
 
 @Composable
@@ -19,7 +22,12 @@ fun InputTextField(
     }
 
     TextField(
+        modifier = modifier,
         value = inputText,
+        singleLine = true,
+        textStyle = TextStyle(
+            color = Color.White
+        ),
         keyboardOptions = KeyboardOptions(
             keyboardType = if (isSensitive) {
                 KeyboardType.Password
@@ -33,5 +41,10 @@ fun InputTextField(
         },
         label = {
             Text(text = hint)
-        })
+        },
+        colors = TextFieldDefaults.textFieldColors(
+            cursorColor = Color.White,
+            focusedLabelColor = Color.White
+        )
+    )
 }
