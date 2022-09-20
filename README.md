@@ -17,7 +17,7 @@ Put the API KEY provided to you, or you can put your own API KEY you got from Op
 - Bottom navigation tab.
 - Showing a list of fetched weather data from previous app launches.
 
-![sc_1](https://user-images.githubusercontent.com/11737795/191380422-4c04291b-84d0-4b20-94f3-05a586713543.jpg)![sc_2](https://user-images.githubusercontent.com/11737795/191380428-45848787-c03a-419f-868f-1da244e97add.jpg)![sc_3](https://user-images.githubusercontent.com/11737795/191380431-f639b73d-4e53-43a3-8faa-d0aeea5d3aac.jpg)![sc_4](https://user-images.githubusercontent.com/11737795/191380436-51f4c568-f3e4-4de3-bd17-f3412511a554.jpg)
+![sc_1](https://user-images.githubusercontent.com/11737795/191380535-b1cf47df-8afd-4697-9e5f-54d4a5d34e7e.jpg) ![sc_2](https://user-images.githubusercontent.com/11737795/191380545-722cdc89-718b-45d7-bd49-bcfe66436248.jpg) ![sc_3](https://user-images.githubusercontent.com/11737795/191380553-5f10e31e-face-429b-80c0-17d2625a709c.jpg) ![sc_4](https://user-images.githubusercontent.com/11737795/191380567-92181a8f-3cfe-4800-941f-45903da16a7a.jpg)
 
 # Core Features
 - Jetpack Compose
