@@ -1,5 +1,5 @@
 # WeatherApp
-WeatherApp is a simple Weather watch application that uses MVVM + Retrofit + Room and Clean Architecture. The application uses data from OpenWeather API. See documentation here: https://openweathermap.org/current
+WeatherApp is a simple Weather watch application that uses MVVM + Retrofit + Room and Clean Architecture. The application uses data from OpenWeather API. See documentation here: https://openweathermap.org/current.
 
 # Usage
 This application requires API KEY from OpenWeather. For you to be able to access the endpoints, you must have a API_KEY field in your local.properties file. Insert a new field with "API_KEY" (without quotes):
@@ -17,7 +17,9 @@ Put the API KEY provided to you, or you can put your own API KEY you got from Op
 - Bottom navigation tab.
 - Showing a list of fetched weather data from previous app launches.
 
-![sc_1](https://user-images.githubusercontent.com/11737795/191381366-af649d44-ba20-4522-8c7f-d02a51e4a4b0.jpg) ![sc_2](https://user-images.githubusercontent.com/11737795/191381372-3c6e0df3-5e6a-4947-9f38-d5e02ac8a67d.jpg) ![sc_3](https://user-images.githubusercontent.com/11737795/191381383-6b687b5c-15e1-4925-969a-b7a239e58d38.jpg) ![sc_4](https://user-images.githubusercontent.com/11737795/191381390-ea4d2188-4611-4cba-9229-cc88b2f6de12.jpg)
+![sc_1](https://user-images.githubusercontent.com/11737795/191381665-f45218d0-0ed7-4552-94aa-f10e5b742590.jpg) ![sc_2](https://user-images.githubusercontent.com/11737795/191381671-813ef637-7bc9-4a35-9a36-1f530722c4d9.jpg) 
+
+![sc_3](https://user-images.githubusercontent.com/11737795/191381690-0684116b-a57e-4c23-8027-1692c99e1cf3.jpg) ![sc_4](https://user-images.githubusercontent.com/11737795/191381700-9a8ed576-6192-46ef-94bb-7bc5a74dbea2.jpg)
 
 # Core Features
 - Jetpack Compose
