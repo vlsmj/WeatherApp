@@ -9,7 +9,7 @@ import com.example.weatherapp.featureweather.domain.model.Weather
 @Dao
 interface WeatherDao {
 
-    @Query("SELECT * FROM weather")
+    @Query("SELECT * FROM weather ORDER BY id DESC")
     suspend fun getAllWeather(): List<Weather>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

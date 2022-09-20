@@ -9,6 +9,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 
 @Composable
 fun InputTextField(
@@ -35,6 +37,11 @@ fun InputTextField(
                 KeyboardType.Text
             }
         ),
+        visualTransformation = if (isSensitive) {
+            PasswordVisualTransformation()
+        } else {
+            VisualTransformation.None
+        },
         onValueChange = {
             inputText = it
             onInputChange(inputText)

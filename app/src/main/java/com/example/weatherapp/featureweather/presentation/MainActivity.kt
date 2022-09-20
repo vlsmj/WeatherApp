@@ -5,17 +5,18 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.MaterialTheme
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
-import androidx.compose.material.Surface
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Home
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.example.weatherapp.R
 import com.example.weatherapp.common.Constants.DEFAULT_LATITUDE
 import com.example.weatherapp.common.Constants.DEFAULT_LONGITUDE
 import com.example.weatherapp.common.Constants.KEY_ADDRESS
@@ -55,66 +56,66 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             WeatherAppTheme {
-                Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {
-                    val navController = rememberNavController()
-                    Scaffold(
-                        bottomBar = {
-                            BottomNavigationBar(
-                                items = listOf(
-                                    BottomNavItem(
-                                        name = "Weather",
-                                        route = Screen.CurrentWeatherScreen.route,
-                                        icon = Icons.Default.Home
-                                    ),
-                                    BottomNavItem(
-                                        name = "List",
-                                        route = Screen.ListWeatherScreen.route,
-                                        icon = Icons.Default.Home
-                                    ),
+                val navController = rememberNavController()
+                Scaffold(
+                    bottomBar = {
+                        BottomNavigationBar(
+                            items = listOf(
+                                BottomNavItem(
+                                    name = "Weather",
+                                    route = Screen.CurrentWeatherScreen.route,
+                                    icon = ImageVector.vectorResource(id = R.drawable.ic_sun)
                                 ),
-                                navController = navController,
-                                onItemClick = {
-                                    navController.navigate(it.route)
+                                BottomNavItem(
+                                    name = "History",
+                                    route = Screen.ListWeatherScreen.route,
+                                    icon = ImageVector.vectorResource(id = R.drawable.ic_history)
+                                ),
+                            ),
+                            navController = navController,
+                            onItemClick = {
+                                navController.navigate(it.route)
+                            }
+                        )
+                    }
+                ) {
+                    NavHost(navController = navController, startDestination = Screen.CurrentWeatherScreen.route) {
+                        composable(Screen.CurrentWeatherScreen.route,
+                            arguments = listOf(
+                                navArgument(name = "username") {
+                                    type = NavType.StringType
+                                    defaultValue = user.username
+                                },
+                                navArgument(name = "lat") {
+                                    type = NavType.StringType
+                                    defaultValue = latitude.toString()
+                                },
+                                navArgument(name = "lon") {
+                                    type = NavType.StringType
+                                    defaultValue = longitude.toString()
+                                },
+                                navArgument(name = "address") {
+                                    type = NavType.StringType
+                                    defaultValue = address
                                 }
+                            )) {
+                            val username = it.arguments?.getString("username") ?: ""
+                            val latitude = it.arguments?.getString("lat") ?: "$DEFAULT_LATITUDE"
+                            val longitude = it.arguments?.getString("lon") ?: "$DEFAULT_LONGITUDE"
+                            val address = it.arguments?.getString("address") ?: ""
+
+                            CurrentWeatherScreen(
+                                username,
+                                latitude,
+                                longitude,
+                                address,
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .padding(start = 16.dp, top = 16.dp, end = 16.dp, bottom = 50.dp)
                             )
                         }
-                    ) {
-                        NavHost(navController = navController, startDestination = Screen.CurrentWeatherScreen.route) {
-                            composable(Screen.CurrentWeatherScreen.route,
-                                arguments = listOf(
-                                    navArgument(name = "username") {
-                                        type = NavType.StringType
-                                        defaultValue = user.username
-                                    },
-                                    navArgument(name = "lat") {
-                                        type = NavType.StringType
-                                        defaultValue = latitude.toString()
-                                    },
-                                    navArgument(name = "lon") {
-                                        type = NavType.StringType
-                                        defaultValue = longitude.toString()
-                                    },
-                                    navArgument(name = "address") {
-                                        type = NavType.StringType
-                                        defaultValue = address
-                                    }
-                                )) {
-                                val username = it.arguments?.getString("username") ?: ""
-                                val latitude = it.arguments?.getString("lat") ?: "$DEFAULT_LATITUDE"
-                                val longitude = it.arguments?.getString("lon") ?: "$DEFAULT_LONGITUDE"
-                                val address = it.arguments?.getString("address") ?: ""
-
-                                CurrentWeatherScreen(
-                                    username,
-                                    latitude,
-                                    longitude,
-                                    address,
-                                    modifier = Modifier
-                                )
-                            }
-                            composable(Screen.ListWeatherScreen.route) {
-                                ListWeatherScreen(modifier = Modifier)
-                            }
+                        composable(Screen.ListWeatherScreen.route) {
+                            ListWeatherScreen(modifier = Modifier.padding(bottom = 50.dp))
                         }
                     }
                 }

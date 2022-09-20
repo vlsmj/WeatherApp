@@ -97,7 +97,7 @@ class PermissionActivity : ComponentActivity(), LocationListener {
 
 
                                             Image(painter = painterResource(id = R.drawable.ic_gps),
-                                                contentDescription = "logo",
+                                                contentDescription = "gps",
                                                 modifier = Modifier.size(72.dp))
 
                                             Spacer(modifier = Modifier.height(16.dp))
@@ -151,7 +151,7 @@ class PermissionActivity : ComponentActivity(), LocationListener {
             val geoLongitude = location.longitude
             val addresses: List<Address> =
                 geocoder.getFromLocation(geoLatitude, geoLongitude, 1)
-            val address: String = addresses[0].getAddressLine(0)
+            val address = "${addresses[0].locality}, ${addresses[0].countryName}"
 
             removeServices()
 
